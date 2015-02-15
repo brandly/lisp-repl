@@ -18939,7 +18939,7 @@ var ReplDisplay = React.createClass({ displayName: "ReplDisplay",
     var _this = this;
     var lines = this.state.history.map(function (item, i) {
       var prefix = item.type === "input" ? _this.props.repl.prompt : "";
-      return React.createElement("p", { key: i }, prefix, item.value);
+      return React.createElement("p", { className: "line", key: i }, React.createElement("span", { className: "prompt" }, prefix), item.value);
     });
 
     return React.createElement("div", null, lines);
@@ -18991,7 +18991,8 @@ var ReplInput = React.createClass({ displayName: "ReplInput",
   },
 
   render: function () {
-    return React.createElement("div", null, React.createElement("span", null, this.props.repl.prompt), React.createElement("input", { type: "text",
+    return React.createElement("div", { className: "line" }, React.createElement("span", { className: "prompt" }, this.props.repl.prompt), React.createElement("input", { type: "text",
+      autoFocus: true,
       value: this.state.value,
       onKeyPress: this.handlePress,
       onChange: this.handleChange,
@@ -19025,7 +19026,7 @@ var Repl = React.createClass({ displayName: "Repl",
   },
 
   render: function () {
-    return React.createElement("div", null, React.createElement(ReplDisplay, { repl: this.repl }), React.createElement(ReplInput, { repl: this.repl }));
+    return React.createElement("div", { className: "repl" }, React.createElement(ReplDisplay, { repl: this.repl }), React.createElement(ReplInput, { repl: this.repl }));
   }
 });
 

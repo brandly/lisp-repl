@@ -7,8 +7,42 @@
     <meta name="description" content="a lisp repl in your browser">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="shortcut icon" href="./favicon.ico">
+    <link rel="stylesheet" href="reset.css">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: monospace;
+        color: #333;
+        font-size: 1rem;
+      }
+
+      .repl {
+        margin: 0 auto;
+        padding: 0.5em;
+        width: 600px;
+        max-width: 100%;
+        border-left: 1px solid #EEE;
+      }
+
+      .prompt {
+        color: #888;
+      }
+
+      .line {
+        margin: 0.2rem 0;
+      }
+
+      input {
+        border: none;
+        outline: none;
+        font-size: 0.8rem;
+        font-family: monospace;
+      }
+    </style>
   </head>
   <body>
     <div id="main"></div>
