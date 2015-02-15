@@ -4,7 +4,7 @@
   "description": "a lisp repl in your browser",
   "private": true,
   "scripts": {
-    "browser": "mkdir -p gh-pages && browserify src/scripts/main.js -t reactify -t babelify -o gh-pages/app.js && cp src/index.html gh-pages",
+    "browser": "mkdir -p gh-pages && browserify src/scripts/main.js -t reactify -t babelify -o gh-pages/app.js && cp src/index.html src/reset.css gh-pages",
     "watch": "watchify src/scripts/main.js -t reactify -t babelify -o gh-pages/app.js"
   },
   "dependencies": {

@@ -37,9 +37,10 @@ const ReplInput = React.createClass({
 
   render: function () {
     return (
-      <div>
-        <span>{this.props.repl.prompt}</span>
+      <div className="line">
+        <span className="prompt">{this.props.repl.prompt}</span>
         <input type="text"
+               autoFocus
                value={this.state.value}
                onKeyPress={this.handlePress}
                onChange={this.handleChange}

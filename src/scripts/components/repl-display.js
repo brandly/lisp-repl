@@ -21,7 +21,7 @@ const ReplDisplay = React.createClass({
   render: function () {
     const lines = this.state.history.map((item, i) => {
       const prefix = (item.type === 'input') ? this.props.repl.prompt : '';
-      return <p key={i}>{prefix}{item.value}</p>;
+      return <p className="line" key={i}><span className="prompt">{prefix}</span>{item.value}</p>;
     });
 
     return (

@@ -18,7 +18,7 @@ const Repl = React.createClass({
 
   render: function () {
     return (
-      <div>
+      <div className="repl">
         <ReplDisplay repl={this.repl} />
         <ReplInput repl={this.repl}/>
       </div>
