@@ -2,7 +2,8 @@
 const React = require('react');
 
 const keys = {
-  enter: 13
+  enter: 13,
+  up: 38
 };
 
 const ReplInput = React.createClass({
@@ -14,10 +15,19 @@ const ReplInput = React.createClass({
     this.setState({value: value});
   },
 
-  handleSubmit: function (event) {
+  handlePress: function (event) {
     if (event.which === keys.enter) {
       this.props.repl.enter(this.state.value);
       this.setValue('');
+    }
+  },
+
+  handleDown: function (event) {
+    if (event.which === keys.up) {
+      let inputs = this.props.repl.getPastInputs();
+      if (inputs.length) {
+        this.setValue(inputs[inputs.length - 1]);
+      }
     }
   },
 
@@ -29,7 +39,11 @@ const ReplInput = React.createClass({
     return (
       <div>
         <span>{this.props.repl.prompt}</span>
-        <input type="text" value={this.state.value} onKeyPress={this.handleSubmit} onChange={this.handleChange} />
+        <input type="text"
+               value={this.state.value}
+               onKeyPress={this.handlePress}
+               onChange={this.handleChange}
+               onKeyDown={this.handleDown} />
       </div>
     );
   }

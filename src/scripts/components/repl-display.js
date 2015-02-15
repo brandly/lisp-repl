@@ -6,21 +6,22 @@ const ReplDisplay = React.createClass({
     this.props.repl.on('UPDATE', this._onChange);
   },
 
-  getLines: function () {
-    return {lines: this.props.repl.getDisplay()};
+  getHistory: function () {
+    return {history: this.props.repl.getHistory()};
   },
 
   getInitialState: function () {
-    return this.getLines();
+    return this.getHistory();
   },
 
   _onChange: function () {
-    this.setState(this.getLines());
+    this.setState(this.getHistory());
   },
 
   render: function () {
-    const lines = this.state.lines.map((line, i) => {
-      return <p key={i}>{line}</p>;
+    const lines = this.state.history.map((item, i) => {
+      const prefix = (item.type === 'input') ? this.props.repl.prompt : '';
+      return <p key={i}>{prefix}{item.value}</p>;
     });
 
     return (
