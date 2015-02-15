@@ -1,8 +1,8 @@
 /** @jsx REACT.DOM */
-var React = require('react');
-var Repl = require('./repl');
+const React = require('react');
+const Repl = require('./repl');
 
-var app = React.createClass({
+const app = React.createClass({
   render: function () {
     return (
       <div>

@@ -1,11 +1,11 @@
 /** @jsx REACT.DOM */
-var React = require('react');
-var ReplDisplay = require('./repl-display');
-var ReplInput = require('./repl-input');
+const React = require('react');
+const ReplDisplay = require('./repl-display');
+const ReplInput = require('./repl-input');
 
-var REPL = require('../models/repl');
+const REPL = require('../models/repl');
 
-var Repl = React.createClass({
+const Repl = React.createClass({
   repl: new REPL(),
 
   getRepl: function () {

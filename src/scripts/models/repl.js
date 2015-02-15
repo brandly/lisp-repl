@@ -1,6 +1,6 @@
-var EventEmitter = require('events').EventEmitter;
-var Lisp = require('brandly-lisp');
-var pack = require('../../../package.json');
+const EventEmitter = require('events').EventEmitter;
+const Lisp = require('brandly-lisp');
+const pack = require('../../../package.json');
 
 module.exports = class REPL extends EventEmitter {
   constructor() {

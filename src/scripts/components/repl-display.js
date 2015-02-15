@@ -1,7 +1,7 @@
 /** @jsx REACT.DOM */
-var React = require('react');
+const React = require('react');
 
-var ReplDisplay = React.createClass({
+const ReplDisplay = React.createClass({
   componentWillMount: function () {
     this.props.repl.on('UPDATE', this._onChange);
   },
@@ -19,7 +19,7 @@ var ReplDisplay = React.createClass({
   },
 
   render: function () {
-    var lines = this.state.lines.map((line, i) => {
+    const lines = this.state.lines.map((line, i) => {
       return <p key={i}>{line}</p>;
     });
 
