@@ -1,0 +1,20 @@
+{
+  "name": "lisp-repl",
+  "version": "0.0.1",
+  "description": "a lisp repl in your browser",
+  "private": true,
+  "scripts": {
+    "browser": "mkdir -p gh-pages && browserify src/scripts/main.js -t reactify -t babelify -o gh-pages/app.js && cp src/index.html gh-pages",
+    "watch": "watchify src/scripts/main.js -t reactify -t babelify -o gh-pages/app.js"
+  },
+  "dependencies": {
+    "babelify": "^5.0.3",
+    "brandly-lisp": "^0.0.1",
+    "react": "^0.12.2",
+    "reactify": "^1.0.0",
+    "watchify": "^2.3.0"
+  },
+  "devDependencies": {},
+  "author": "",
+  "license": "MIT"
+}
