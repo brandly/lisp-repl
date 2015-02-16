@@ -15,7 +15,11 @@ module.exports = class REPL extends EventEmitter {
       try {
         const result = this.lisp.exec(value);
         if (result) {
-          this.recordOutput(result);
+          if (result instanceof Array) {
+            this.recordOutput('(list ' + result.join(' ') + ')');
+          } else {
+            this.recordOutput(result);
+          }
         }
       } catch (e) {
         this.recordOutput(e.toString());
