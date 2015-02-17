@@ -18,6 +18,14 @@ const ReplDisplay = React.createClass({
     this.setState(this.getHistory());
   },
 
+  scrollToBottom: function () {
+    window.scrollTo(0,document.body.scrollHeight);
+  },
+
+  componentDidUpdate: function () {
+    this.scrollToBottom();
+  },
+
   render: function () {
     const lines = this.state.history.map((item, i) => {
       const prefix = (item.type === 'input') ? this.props.repl.prompt : '';
