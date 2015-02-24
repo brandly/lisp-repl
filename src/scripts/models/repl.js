@@ -8,18 +8,22 @@ module.exports = class REPL extends EventEmitter {
     this.history = [];
   }
 
-  enter(value) {
-    this.recordInput(value);
+  getHistory() {
+    return this.history;
+  }
 
-    if (value.trim().length) {
+  getPastInputs() {
+    return this.history.filter(h => h.type === 'input').map(h => h.value);
+  }
+
+  enter(input) {
+    this.recordInput(input);
+
+    if (input.trim().length) {
       try {
-        const result = this.lisp.exec(value);
+        const result = this.lisp.exec(input);
         if (result) {
-          if (result instanceof Array) {
-            this.recordOutput('(list ' + result.join(' ') + ')');
-          } else {
-            this.recordOutput(result);
-          }
+          this.recordOutput(result);
         }
       } catch (e) {
         this.recordOutput(e.toString());
@@ -39,15 +43,15 @@ module.exports = class REPL extends EventEmitter {
   recordOutput(value) {
     this.history.push({
       type: 'output',
-      value: value
+      value: this.formatOutput(value)
     });
   }
 
-  getHistory() {
-    return this.history;
-  }
-
-  getPastInputs() {
-    return this.history.filter(h => h.type === 'input').map(h => h.value);
+  formatOutput(value) {
+    if (value instanceof Array) {
+      return '(list ' + value.join(' ') + ')';
+    } else {
+      return value;
+    }
   }
 };
