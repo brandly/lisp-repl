@@ -1,5 +1,5 @@
 /** @jsx REACT.DOM */
-const React = require('react');
+import React from 'react';
 
 const keys = {
   enter: 13,
@@ -7,22 +7,22 @@ const keys = {
 };
 
 const ReplInput = React.createClass({
-  getInitialState: function () {
-    return {value: ''}
+  getInitialState() {
+    return {value: ''};
   },
 
-  setValue: function (value) {
+  setValue(value) {
     this.setState({value: value});
   },
 
-  handlePress: function (event) {
+  handlePress(event) {
     if (event.which === keys.enter) {
       this.props.repl.enter(this.state.value);
       this.setValue('');
     }
   },
 
-  handleDown: function (event) {
+  handleDown(event) {
     if (event.which === keys.up) {
       let inputs = this.props.repl.getPastInputs();
       if (inputs.length) {
@@ -31,11 +31,11 @@ const ReplInput = React.createClass({
     }
   },
 
-  handleChange: function(event) {
+  handleChange(event) {
     this.setValue(event.target.value);
   },
 
-  render: function () {
+  render() {
     return (
       <div className="line">
         <span className="prompt">{this.props.repl.prompt}</span>

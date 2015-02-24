@@ -1,28 +1,27 @@
 /** @jsx REACT.DOM */
-const React = require('react');
-const ReplDisplay = require('./repl-display');
-const ReplInput = require('./repl-input');
-
-const REPL = require('../models/repl');
+import React from 'react';
+import ReplDisplay from './repl-display';
+import ReplInput from './repl-input';
+import REPL from '../models/repl';
 
 const Repl = React.createClass({
   repl: new REPL(),
 
-  getRepl: function () {
+  getRepl() {
     return {repl: this.repl};
   },
 
-  getInitialState: function () {
+  getInitialState() {
     return this.getRepl();
   },
 
-  render: function () {
+  render() {
     return (
       <div className="repl">
         <ReplDisplay repl={this.repl} />
         <ReplInput repl={this.repl}/>
       </div>
-    )
+    );
   }
 });
 

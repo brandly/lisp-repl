@@ -1,32 +1,32 @@
 /** @jsx REACT.DOM */
-const React = require('react');
+import React from 'react';
 
 const ReplDisplay = React.createClass({
-  componentWillMount: function () {
+  componentWillMount() {
     this.props.repl.on('UPDATE', this._onChange);
   },
 
-  getHistory: function () {
+  getHistory() {
     return {history: this.props.repl.getHistory()};
   },
 
-  getInitialState: function () {
+  getInitialState() {
     return this.getHistory();
   },
 
-  _onChange: function () {
+  _onChange() {
     this.setState(this.getHistory());
   },
 
-  scrollToBottom: function () {
-    window.scrollTo(0,document.body.scrollHeight);
+  scrollToBottom() {
+    window.scrollTo(0, document.body.scrollHeight);
   },
 
-  componentDidUpdate: function () {
+  componentDidUpdate() {
     this.scrollToBottom();
   },
 
-  render: function () {
+  render() {
     const lines = this.state.history.map((item, i) => {
       const prefix = (item.type === 'input') ? this.props.repl.prompt : '';
       return <p className="line" key={i}><span className="prompt">{prefix}</span>{item.value}</p>;

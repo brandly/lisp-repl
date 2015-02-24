@@ -1,14 +1,14 @@
 /** @jsx REACT.DOM */
-const React = require('react');
-const Repl = require('./repl');
+import React from 'react';
+import Repl from './repl';
 
 const app = React.createClass({
-  render: function () {
+  render() {
     return (
       <div>
         <Repl />
       </div>
-    )
+    );
   }
 });
 
