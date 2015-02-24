@@ -1,5 +1,5 @@
-const EventEmitter = require('events').EventEmitter;
-const Lisp = require('brandly-lisp');
+import { EventEmitter } from 'events';
+import Lisp from 'brandly-lisp';
 
 module.exports = class REPL extends EventEmitter {
   constructor() {
@@ -49,7 +49,7 @@ module.exports = class REPL extends EventEmitter {
 
   formatOutput(value) {
     if (value instanceof Array) {
-      return '(list ' + value.join(' ') + ')';
+      return `(list ${value.join(' ')})`;
     } else {
       return value;
     }
