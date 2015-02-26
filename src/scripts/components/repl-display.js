@@ -1,7 +1,10 @@
 /** @jsx REACT.DOM */
 import React from 'react';
+import { addons } from 'react/addons';
 
 const ReplDisplay = React.createClass({
+  mixins: [addons.PureRenderMixin],
+
   componentWillMount() {
     this.props.repl.on('UPDATE', this._onChange);
   },
@@ -34,7 +37,7 @@ const ReplDisplay = React.createClass({
 
     return (
       <div>
-        {lines}
+        {lines.toArray()}
       </div>
     );
   }

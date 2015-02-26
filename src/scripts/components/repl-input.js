@@ -1,5 +1,6 @@
 /** @jsx REACT.DOM */
 import React from 'react';
+import { addons } from 'react/addons';
 
 const keys = {
   enter: 13,
@@ -7,6 +8,8 @@ const keys = {
 };
 
 const ReplInput = React.createClass({
+  mixins: [addons.PureRenderMixin],
+
   getInitialState() {
     return {value: ''};
   },
@@ -25,8 +28,8 @@ const ReplInput = React.createClass({
   handleDown(event) {
     if (event.which === keys.up) {
       let inputs = this.props.repl.getPastInputs();
-      if (inputs.length) {
-        this.setValue(inputs[inputs.length - 1]);
+      if (inputs.size) {
+        this.setValue(inputs.get(inputs.size - 1));
       }
     }
   },

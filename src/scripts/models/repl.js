@@ -1,11 +1,12 @@
 import { EventEmitter } from 'events';
 import Lisp from 'brandly-lisp';
+import Immutable from 'immutable';
 
 module.exports = class REPL extends EventEmitter {
   constructor() {
     this.lisp = new Lisp();
     this.prompt = '>> ';
-    this.history = [];
+    this.history = Immutable.List();
   }
 
   getHistory() {
@@ -34,14 +35,14 @@ module.exports = class REPL extends EventEmitter {
   }
 
   recordInput(value) {
-    this.history.push({
+    this.history = this.history.push({
       type: 'input',
       value: value
     });
   }
 
   recordOutput(value) {
-    this.history.push({
+    this.history = this.history.push({
       type: 'output',
       value: this.formatOutput(value)
     });
