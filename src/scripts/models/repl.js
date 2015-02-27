@@ -16,7 +16,9 @@ module.exports = class REPL extends EventEmitter {
   }
 
   getPastInputs() {
-    return this.history.filter(h => h.type === 'input').map(h => h.value);
+    return this.history
+               .filter(h => h.type === 'input' && h.value)
+               .map(h => h.value);
   }
 
   getPreviousInput() {
@@ -34,9 +36,10 @@ module.exports = class REPL extends EventEmitter {
   }
 
   enter(input) {
+    input = input.trim();
     this.recordInput(input);
 
-    if (input.trim().length) {
+    if (input.length) {
       try {
         const result = this.lisp.exec(input);
         if (result) {
