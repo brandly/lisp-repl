@@ -6,7 +6,9 @@ module.exports = class REPL extends EventEmitter {
   constructor() {
     this.lisp = new Lisp();
     this.prompt = '>> ';
+
     this.history = Immutable.List();
+    this.inputIndex = 0;
   }
 
   getHistory() {
@@ -15,6 +17,20 @@ module.exports = class REPL extends EventEmitter {
 
   getPastInputs() {
     return this.history.filter(h => h.type === 'input').map(h => h.value);
+  }
+
+  getPreviousInput() {
+    this.inputIndex = Math.max(this.inputIndex - 1, 0);
+    return this.getInputAtIndex();
+  }
+
+  getNextInput() {
+    this.inputIndex = Math.min(this.inputIndex + 1, this.getPastInputs().size);
+    return this.getInputAtIndex();
+  }
+
+  getInputAtIndex() {
+    return this.getPastInputs().get(this.inputIndex) || '';
   }
 
   enter(input) {
@@ -39,6 +55,7 @@ module.exports = class REPL extends EventEmitter {
       type: 'input',
       value: value
     });
+    this.inputIndex = this.getPastInputs().size;
   }
 
   recordOutput(value) {

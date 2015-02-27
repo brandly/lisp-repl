@@ -4,7 +4,8 @@ import { addons } from 'react/addons';
 
 const keys = {
   enter: 13,
-  up: 38
+  up: 38,
+  down: 40
 };
 
 const ReplInput = React.createClass({
@@ -27,14 +28,12 @@ const ReplInput = React.createClass({
 
   handleDown(event) {
     if (event.which === keys.up) {
-      let inputs = this.props.repl.getPastInputs();
-      if (inputs.size) {
-        this.setValue(inputs.get(inputs.size - 1));
+      this.setValue(this.props.repl.getPreviousInput());
+      this.moveCaretToEndOfInput();
 
-        setTimeout(() => {
-          this.moveCaretToEndOfInput();
-        });
-      }
+    } else if (event.which === keys.down) {
+      this.setValue(this.props.repl.getNextInput());
+      this.moveCaretToEndOfInput();
     }
   },
 
@@ -44,7 +43,9 @@ const ReplInput = React.createClass({
 
   moveCaretToEndOfInput() {
     const el = this.refs.theInput.getDOMNode();
-    el.selectionStart = el.selectionEnd = this.state.value.length;
+    setTimeout(() => {
+      el.selectionStart = el.selectionEnd = this.state.value.length;
+    });
   },
 
   render() {
