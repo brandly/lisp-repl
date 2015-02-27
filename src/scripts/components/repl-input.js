@@ -30,12 +30,21 @@ const ReplInput = React.createClass({
       let inputs = this.props.repl.getPastInputs();
       if (inputs.size) {
         this.setValue(inputs.get(inputs.size - 1));
+
+        setTimeout(() => {
+          this.moveCaretToEndOfInput();
+        });
       }
     }
   },
 
   handleChange(event) {
     this.setValue(event.target.value);
+  },
+
+  moveCaretToEndOfInput() {
+    const el = this.refs.theInput.getDOMNode();
+    el.selectionStart = el.selectionEnd = this.state.value.length;
   },
 
   render() {
@@ -47,7 +56,8 @@ const ReplInput = React.createClass({
                value={this.state.value}
                onKeyPress={this.handlePress}
                onChange={this.handleChange}
-               onKeyDown={this.handleDown} />
+               onKeyDown={this.handleDown}
+               ref="theInput" />
       </div>
     );
   }
