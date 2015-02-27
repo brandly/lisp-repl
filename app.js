@@ -25743,7 +25743,7 @@ module.exports = (function (EventEmitter) {
     getPastInputs: {
       value: function getPastInputs() {
         return this.history.filter(function (h) {
-          return h.type === "input";
+          return h.type === "input" && h.value;
         }).map(function (h) {
           return h.value;
         });
@@ -25776,9 +25776,10 @@ module.exports = (function (EventEmitter) {
     },
     enter: {
       value: function enter(input) {
+        input = input.trim();
         this.recordInput(input);
 
-        if (input.trim().length) {
+        if (input.length) {
           try {
             var result = this.lisp.exec(input);
             if (result) {
