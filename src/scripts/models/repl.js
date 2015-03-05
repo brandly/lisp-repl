@@ -42,7 +42,7 @@ module.exports = class REPL extends EventEmitter {
     if (input.length) {
       try {
         const result = this.lisp.exec(input);
-        if (result) {
+        if (typeof result !== 'undefined') {
           this.recordOutput(result);
         }
       } catch (e) {
