@@ -25782,7 +25782,7 @@ module.exports = (function (EventEmitter) {
         if (input.length) {
           try {
             var result = this.lisp.exec(input);
-            if (result) {
+            if (typeof result !== "undefined") {
               this.recordOutput(result);
             }
           } catch (e) {
