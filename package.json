@@ -21,5 +21,8 @@
     "watchify": "^2.3.0"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "jest": {
+    "scriptPreprocessor": "preprocessor.js"
+  }
 }
