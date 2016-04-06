@@ -9,7 +9,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "brandly-lisp": "^0.0.1",
+    "brandly-lisp": "^0.1.0",
     "immutable": "^3.6.2",
     "react": "^0.12.2"
   },
