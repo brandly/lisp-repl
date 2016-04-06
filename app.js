@@ -259,6 +259,14 @@ module.exports = {
     return a % b;
   },
 
+  and: reduceArguments(function (a, b) {
+    return a && b
+  }),
+
+  or: reduceArguments(function (a, b) {
+    return a || b
+  }),
+
   not: function (statement) {
     return !statement;
   },
