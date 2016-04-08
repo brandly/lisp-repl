@@ -1,6 +1,6 @@
 /** @jsx REACT.DOM */
 import React from 'react';
-import { addons } from 'react/addons';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 const keys = {
   enter: 13,
@@ -9,7 +9,7 @@ const keys = {
 };
 
 const ReplInput = React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   getInitialState() {
     return {value: ''};

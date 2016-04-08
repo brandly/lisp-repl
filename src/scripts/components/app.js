@@ -1,10 +1,10 @@
 /** @jsx REACT.DOM */
 import React from 'react';
-import { addons } from 'react/addons';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Repl from './repl';
 
 const app = React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   render() {
     return (
