@@ -1,0 +1,21 @@
+#!/bin/bash
+
+function main {
+  npm update brandly-lisp
+  npm run browser
+
+  add-commit-push
+
+  (
+    cd gh-pages
+    add-commit-push
+  )
+}
+
+function add-commit-push {
+  git add .
+  git commit -m "update brandly-lisp"
+  git push
+}
+
+main
