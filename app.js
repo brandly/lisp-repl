@@ -25044,8 +25044,6 @@ module.exports = require('./lib/React');
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-/** @jsx REACT.DOM */
-
 var React = _interopRequire(require("react"));
 
 var PureRenderMixin = _interopRequire(require("react-addons-pure-render-mixin"));
@@ -25058,10 +25056,10 @@ var app = React.createClass({
   mixins: [PureRenderMixin],
 
   render: function render() {
-    return REACT.DOM(
+    return React.createElement(
       "div",
       null,
-      REACT.DOM(Repl, null)
+      React.createElement(Repl, null)
     );
   }
 });
@@ -25138,8 +25136,6 @@ module.exports = ReplDisplay;
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-/** @jsx REACT.DOM */
-
 var React = _interopRequire(require("react"));
 
 var PureRenderMixin = _interopRequire(require("react-addons-pure-render-mixin"));
@@ -25194,15 +25190,15 @@ var ReplInput = React.createClass({
   },
 
   render: function render() {
-    return REACT.DOM(
+    return React.createElement(
       "div",
       { className: "line" },
-      REACT.DOM(
+      React.createElement(
         "span",
         { className: "prompt" },
         this.props.repl.prompt
       ),
-      REACT.DOM("input", { type: "text",
+      React.createElement("input", { type: "text",
         autoFocus: true,
         value: this.state.value,
         onKeyPress: this.handlePress,
@@ -25219,8 +25215,6 @@ module.exports = ReplInput;
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
-
-/** @jsx REACT.DOM */
 
 var React = _interopRequire(require("react"));
 
@@ -25248,11 +25242,11 @@ var Repl = React.createClass({
   },
 
   render: function render() {
-    return REACT.DOM(
+    return React.createElement(
       "div",
       { className: "repl" },
-      REACT.DOM(ReplDisplay, { repl: this.repl }),
-      REACT.DOM(ReplInput, { repl: this.repl })
+      React.createElement(ReplDisplay, { repl: this.repl }),
+      React.createElement(ReplInput, { repl: this.repl })
     );
   }
 });
@@ -25264,15 +25258,13 @@ module.exports = Repl;
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-/** @jsx REACT.DOM */
-
 var APP = _interopRequire(require("./components/app"));
 
 var React = _interopRequire(require("react"));
 
 var render = require("react-dom").render;
 
-render(REACT.DOM(APP, null), document.getElementById("main"));
+render(React.createElement(APP, null), document.getElementById("main"));
 
 },{"./components/app":177,"react":176,"react-dom":38}],182:[function(require,module,exports){
 "use strict";
