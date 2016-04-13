@@ -8902,8 +8902,7 @@ var DOMPropertyOperations = {
         var propName = propertyInfo.propertyName;
         // Must explicitly cast values for HAS_SIDE_EFFECTS-properties to the
         // property type before comparing; only `value` does and is string.
-        // Must set `value` property if it is not null and not yet set.
-        if (!propertyInfo.hasSideEffects || '' + node[propName] !== '' + value || !node.hasAttribute(propertyInfo.attributeName)) {
+        if (!propertyInfo.hasSideEffects || '' + node[propName] !== '' + value) {
           // Contrary to `setAttribute`, object properties are properly
           // `toString`ed by IE8/9.
           node[propName] = value;
@@ -10790,6 +10789,8 @@ module.exports = PooledClass;
 
 'use strict';
 
+var _assign = require('object-assign');
+
 var ReactChildren = require('./ReactChildren');
 var ReactComponent = require('./ReactComponent');
 var ReactClass = require('./ReactClass');
@@ -10800,6 +10801,7 @@ var ReactPropTypes = require('./ReactPropTypes');
 var ReactVersion = require('./ReactVersion');
 
 var onlyChild = require('./onlyChild');
+var warning = require('fbjs/lib/warning');
 
 var createElement = ReactElement.createElement;
 var createFactory = ReactElement.createFactory;
@@ -10809,6 +10811,17 @@ if (process.env.NODE_ENV !== 'production') {
   createElement = ReactElementValidator.createElement;
   createFactory = ReactElementValidator.createFactory;
   cloneElement = ReactElementValidator.cloneElement;
+}
+
+var __spread = _assign;
+
+if (process.env.NODE_ENV !== 'production') {
+  var warned = false;
+  __spread = function () {
+    process.env.NODE_ENV !== 'production' ? warning(warned, 'React.__spread is deprecated and should not be used. Use ' + 'Object.assign directly or another helper function with similar ' + 'semantics. You may be seeing this warning due to your compiler. ' + 'See https://fb.me/react-spread-deprecation for more details.') : void 0;
+    warned = true;
+    return _assign.apply(null, arguments);
+  };
 }
 
 var React = {
@@ -10843,12 +10856,15 @@ var React = {
   // since they are just generating DOM strings.
   DOM: ReactDOMFactories,
 
-  version: ReactVersion
+  version: ReactVersion,
+
+  // Deprecated hook for JSX spread, don't use this for anything.
+  __spread: __spread
 };
 
 module.exports = React;
 }).call(this,require('_process'))
-},{"./ReactChildren":65,"./ReactClass":66,"./ReactComponent":67,"./ReactDOMFactories":81,"./ReactElement":98,"./ReactElementValidator":99,"./ReactPropTypes":121,"./ReactVersion":127,"./onlyChild":167,"_process":36}],63:[function(require,module,exports){
+},{"./ReactChildren":65,"./ReactClass":66,"./ReactComponent":67,"./ReactDOMFactories":81,"./ReactElement":98,"./ReactElementValidator":99,"./ReactPropTypes":121,"./ReactVersion":127,"./onlyChild":167,"_process":36,"fbjs/lib/warning":33,"object-assign":35}],63:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -13631,6 +13647,11 @@ function putListener() {
   EventPluginHub.putListener(listenerToPut.inst, listenerToPut.registrationName, listenerToPut.listener);
 }
 
+function optionPostMount() {
+  var inst = this;
+  ReactDOMOption.postMountWrapper(inst);
+}
+
 // There are so many media events, it makes sense to just
 // maintain a list rather than create a `trapBubbledEvent` for each
 var mediaEvents = {
@@ -13939,6 +13960,8 @@ ReactDOMComponent.Mixin = {
           transaction.getReactMountReady().enqueue(AutoFocusUtils.focusDOMComponent, this);
         }
         break;
+      case 'option':
+        transaction.getReactMountReady().enqueue(optionPostMount, this);
     }
 
     return mountImage;
@@ -15200,6 +15223,7 @@ module.exports = { debugTool: ReactDOMDebugTool };
 var _assign = require('object-assign');
 
 var ReactChildren = require('./ReactChildren');
+var ReactDOMComponentTree = require('./ReactDOMComponentTree');
 var ReactDOMSelect = require('./ReactDOMSelect');
 
 var warning = require('fbjs/lib/warning');
@@ -15241,6 +15265,15 @@ var ReactDOMOption = {
     inst._wrapperState = { selected: selected };
   },
 
+  postMountWrapper: function (inst) {
+    // value="" should make a value attribute (#6219)
+    var props = inst._currentElement.props;
+    if (props.value != null) {
+      var node = ReactDOMComponentTree.getNodeFromInstance(inst);
+      node.setAttribute('value', props.value);
+    }
+  },
+
   getNativeProps: function (inst, props) {
     var nativeProps = _assign({ selected: undefined, children: undefined }, props);
 
@@ -15276,7 +15309,7 @@ var ReactDOMOption = {
 
 module.exports = ReactDOMOption;
 }).call(this,require('_process'))
-},{"./ReactChildren":65,"./ReactDOMSelect":87,"_process":36,"fbjs/lib/warning":33,"object-assign":35}],87:[function(require,module,exports){
+},{"./ReactChildren":65,"./ReactDOMComponentTree":77,"./ReactDOMSelect":87,"_process":36,"fbjs/lib/warning":33,"object-assign":35}],87:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -20842,7 +20875,7 @@ module.exports = ReactUpdates;
 
 'use strict';
 
-module.exports = '15.0.0';
+module.exports = '15.0.1';
 },{}],128:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -25185,6 +25218,8 @@ var React = _interopRequire(require("react"));
 
 var PureRenderMixin = _interopRequire(require("react-addons-pure-render-mixin"));
 
+var findDOMNode = require("react-dom").findDOMNode;
+
 var keys = {
   enter: 13,
   up: 38,
@@ -25228,7 +25263,7 @@ var ReplInput = React.createClass({
   moveCaretToEndOfInput: function moveCaretToEndOfInput() {
     var _this = this;
 
-    var el = this.refs.theInput.getDOMNode();
+    var el = findDOMNode(this.refs.theInput);
     setTimeout(function () {
       el.selectionStart = el.selectionEnd = _this.state.value.length;
     });
@@ -25256,7 +25291,7 @@ var ReplInput = React.createClass({
 
 module.exports = ReplInput;
 
-},{"react":176,"react-addons-pure-render-mixin":37}],180:[function(require,module,exports){
+},{"react":176,"react-addons-pure-render-mixin":37,"react-dom":38}],180:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -25337,6 +25372,8 @@ module.exports = (function (_EventEmitter) {
 
     this.history = Immutable.List();
     this.inputIndex = 0;
+
+    this.lisp.globalContext.set("print", this.recordOutput.bind(this));
   }
 
   _inherits(REPL, _EventEmitter);
