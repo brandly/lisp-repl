@@ -9,6 +9,8 @@ module.exports = class REPL extends EventEmitter {
 
     this.history = Immutable.List();
     this.inputIndex = 0;
+
+    this.lisp.globalContext.set('print', this.recordOutput.bind(this))
   }
 
   getHistory() {
