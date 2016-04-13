@@ -100,6 +100,17 @@ module.exports = function eval(x, ctx) {
 
     ctx.findContextWithIdentifier(key).set(key, eval(val, ctx));
 
+  } else if (x[0] === 'let') {
+    var vars = x[1],
+        body = x[2];
+
+    var letCtx = new Context({}, ctx);
+    vars.forEach(function (_var) {
+      letCtx.set(_var[0], eval(_var[1], ctx));
+    });
+
+    return eval(body, letCtx);
+
   } else if (x[0] === 'lambda') {        // (lambda (params...) body)
     var params = x[1],
         body = x[2];
@@ -314,6 +325,18 @@ module.exports = {
     return list.map(fn);
   },
 
+  filter: function (fn, list) {
+    return list.filter(fn);
+  },
+
+  reduce: function (fn, list, initial) {
+    if (typeof initial === 'undefined') {
+      return list.reduce(fn);
+    } else {
+      return list.reduce(fn, initial);
+    }
+  },
+
   max: function (list) {
     return Math.max.apply(null, list);
   },
@@ -354,7 +377,29 @@ module.exports = {
 
   'symbol?': function (thing) {
     return typeof thing === 'string';
-  }
+  },
+
+  sin: Math.sin,
+  cos: Math.cos,
+  tan: Math.tan,
+  asin: Math.asin,
+  acos: Math.acos,
+  atan: Math.atan,
+
+  sinh: Math.sinh,
+  cosh: Math.cosh,
+  tanh: Math.tanh,
+  asinh: Math.asinh,
+  acosh: Math.acosh,
+  atanh: Math.atanh,
+
+  expt: Math.pow,
+  sqrt: Math.sqrt,
+
+  exp: Math.exp,
+  log: Math.log,
+
+  print: console.log
 };
 
 function reduceArguments(fn) {
