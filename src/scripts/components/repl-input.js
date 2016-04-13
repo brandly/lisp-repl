@@ -1,5 +1,6 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import { findDOMNode } from 'react-dom';
 
 const keys = {
   enter: 13,
@@ -41,7 +42,7 @@ const ReplInput = React.createClass({
   },
 
   moveCaretToEndOfInput() {
-    const el = this.refs.theInput.getDOMNode();
+    const el = findDOMNode(this.refs.theInput);
     setTimeout(() => {
       el.selectionStart = el.selectionEnd = this.state.value.length;
     });
